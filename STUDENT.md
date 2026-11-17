@@ -5,7 +5,7 @@
 - Lớp (L2 / L3 / khác): L2B
 - Tài khoản GitHub: trahoangdev
 - Repo bài nộp (URL): https://github.com/trahoangdev/K5-L23-Day08-2A202603342-HoangTrongTra-AI-Assisted-Labeling
-- Commit chốt bài (hash): Chờ hash sau khi commit Pha 6. Commit đầu vào là `f58f936`.
+- Commit chốt bài (hash): `7b61faa392909b18b4f2b804fcdc0e8ba0eb9514`
 - Máy: Windows 11 Home Single Language, NVIDIA GeForce RTX 3050 Laptop GPU (4 GB VRAM). Pha 2 chạy trên GPU với PyTorch 2.15.0+cu132 (CUDA 13.2).
 - CVAT (Docker): v2.74.1
 
