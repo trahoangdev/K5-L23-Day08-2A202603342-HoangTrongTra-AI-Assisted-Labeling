@@ -6,14 +6,17 @@
 
 | Lớp | Model + cỡ | Ngưỡng | Vì sao (dẫn `run_id` trong `model_log.csv`) |
 |---|---|---|---|
-| person / bicycle / motorbike / car / bus / truck | YOLO26n, ảnh đầu vào 640 px | <<theo lớp, từ threshold_sweep>> | Phát hiện người lái và xe máy ở ảnh 011. Ngưỡng 0.50 loại cả xe máy đúng 0.46 ở giữa ảnh (`r01`, `r02`). |
-| three_wheeler | YOLOE-26s, prompt `tuk-tuk`, `cyclo`, `cargo tricycle` | <<theo lớp, từ threshold_sweep>> | Tìm được tuk-tuk xanh ảnh 002 và hai xích lô ở ảnh 032 (`r03`). Các cụm xích lô đỗ sát nhau vẫn cần rà. |
+| person / bicycle / motorbike / car / bus / truck | YOLO26m, `imgsz=1024` | 0.30 mặc định cho từng lớp | Hai lượt pilot với YOLO26n cho thấy ngưỡng 0.50 loại cả box xe máy đúng 0.46 ở ảnh 011 (`r01`, `r02`). Lượt toàn tập với YOLO26m vẫn chưa đủ căn cứ chọn ngưỡng riêng. |
+| three_wheeler | YOLOE-26s, `imgsz=1024`, prompt `tuk-tuk`, `cyclo`, `cargo tricycle` | 0.15 | Lượt pilot tìm được tuk-tuk xanh ảnh 002 và hai xích lô ở ảnh 032 (`r03`). Lượt quét ngưỡng trên gold đạt recall 7/7 và precision 7/9 ở ngưỡng 0.15. |
 
+- Đầu vào Pha 3 là hai lượt CUDA trên đủ 36 ảnh ở `conf=0.05` và `imgsz=1024`. YOLO26m tạo 1.672 box và YOLOE-26s tạo 125 box. Các nhận xét từ `r01` đến `r04` thuộc lượt thử Pha 2 ở `imgsz=640`.
+- Quét ngưỡng trên 4 ảnh gold (nguồn `qc/threshold_sweep.csv`). Recall cao nhất trong dải 0.10–0.50 là `person` 22/30, `bicycle` 4/5, `motorbike` 12/18 và `car` 7/8. Cả bốn lớp đều dưới mục tiêu 90%. `bus` có 1 vật và `truck` có 0 vật, dưới mức tối thiểu 5 vật mỗi lớp. Với `three_wheeler`, ngưỡng 0.15 khớp 7/7 vật với 2 box thừa. Ở ngưỡng 0.30, lớp này chỉ khớp 5/7 vật.
+- Tham số gộp cho Pha 4 là `--conf 0.30 --thr "three_wheeler=0.15"`.
 - Lệnh `merge_prelabels.py` đã dùng (dán nguyên): <<>>
 - **Phiên bản SAM bạn chọn** (SAM 1 / 2.1 / 3) và lý do: SAM 2.1 Tiny (`sam2.1_t.pt`). Giữ cùng phiên bản và tham số để đối chiếu với lượt CPU. Trên RTX 3050, lượt `r04` tạo polygon cho 10/10 box ở 2 ảnh, trung bình 3,72 giây/ảnh. Ở ảnh 013, box `person` chứa hai người nên mask lấy vùng của cả hai người.
 - Lỗi nào **không sửa được bằng đổi ngưỡng** (ví dụ tuk-tuk bị gọi `car`)? Sửa thế nào? YOLO26n gọi tuk-tuk bị cắt ở mép trái ảnh 011 là `truck` (0.34, `r01`). Đổi ngưỡng chỉ lọc box theo điểm. YOLOE nhận diện xe đó là `three_wheeler` ở `r03`, nên dùng YOLOE để bổ sung lớp này.
 - Box **điểm cao mà sai** hoặc **điểm thấp mà đúng** (ảnh nào): Xe máy của người áo hồng ở ảnh 011 có box đúng ở 0.46 trong `r01` và mất khi tăng ngưỡng lên 0.50 trong `r02`.
-- Giới hạn: chọn ngưỡng trên chính gold (4 ảnh) nên số đo máy trên gold là lạc quan: <<>>
+- Giới hạn: dùng cùng 4 ảnh gold để quét ngưỡng và tính precision/recall, nên kết quả có thể lạc quan khi áp dụng cho 24 ảnh batch. Mẫu ít vật làm tỷ lệ dao động mạnh. Chẳng hạn, nhận đúng 1/1 xe buýt ở ngưỡng 0.30 vẫn chỉ là kết quả trên một xe.
 
 ## 2. AI error profile (từ `qc/review_stats.md`)
 
