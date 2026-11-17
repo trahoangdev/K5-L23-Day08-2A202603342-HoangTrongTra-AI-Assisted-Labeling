@@ -1,4 +1,4 @@
-# Báo cáo Day 08 — <<MSHV - Họ và tên>>
+# Báo cáo Day 08 — 2A202603342 - Hoàng Trọng Trà
 
 > Một file duy nhất cho cả bài (đã gộp recipe, QC và ghi chú cá nhân). Mọi con số kèm **mẫu số** và nguồn (file nào). Viết bằng lời của bạn.
 
@@ -69,6 +69,7 @@ Nếu Rework / Hold, việc cần làm tiếp: <<>>
 
 ## 8. Ghi chú cá nhân
 
+- Rà soát CP1: Học viên đã rà soát nhãn của 4 ảnh trong CVAT. Bản COCO còn 8 box có cờ `can_review` gồm 2 ở `img_012.jpg`, 4 ở `img_020.jpg` và 2 ở `img_036.jpg`.
 - **Dùng AI để làm bài** (công cụ nào, việc gì, kiểm tra thế nào; "không dùng" nếu không): <<>>
 - Gold có bị nhiễm không (bạn có nhìn pre-label hay hỏi AI trước khi gán xong)? <<không / có, như sau: ...>>
 - Máy / GPU / CVAT dùng; vướng mắc cài đặt: <<>>
