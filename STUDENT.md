@@ -6,7 +6,7 @@
 - Tài khoản GitHub: trahoangdev
 - Repo bài nộp (URL): https://github.com/trahoangdev/K5-L23-Day08-2A202603342-HoangTrongTra-AI-Assisted-Labeling
 - Commit chốt bài (hash): <<>>
-- Máy: Windows 11 Home Single Language, chạy CPU (PyTorch 2.15.0+cpu)
+- Máy: Windows 11 Home Single Language, NVIDIA GeForce RTX 3050 Laptop GPU (4 GB VRAM). Pha 2 chạy trên GPU với PyTorch 2.15.0+cu132 (CUDA 13.2).
 - CVAT (Docker): v2.74.1
 
 ## Kết quả tóm tắt (điền cuối bài; số lấy từ `submission/qc/*`, kèm mẫu số)

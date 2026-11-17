@@ -6,13 +6,13 @@
 
 | Lớp | Model + cỡ | Ngưỡng | Vì sao (dẫn `run_id` trong `model_log.csv`) |
 |---|---|---|---|
-| person / bicycle / motorbike / car / bus / truck | <<YOLO26m>> | <<theo lớp, từ threshold_sweep>> | <<>> |
-| three_wheeler | <<YOLOE-26s, prompt: ...>> | <<>> | <<>> |
+| person / bicycle / motorbike / car / bus / truck | YOLO26n, ảnh đầu vào 640 px | <<theo lớp, từ threshold_sweep>> | Phát hiện người lái và xe máy ở ảnh 011. Ngưỡng 0.50 loại cả xe máy đúng 0.46 ở giữa ảnh (`r01`, `r02`). |
+| three_wheeler | YOLOE-26s, prompt `tuk-tuk`, `cyclo`, `cargo tricycle` | <<theo lớp, từ threshold_sweep>> | Tìm được tuk-tuk xanh ảnh 002 và hai xích lô ở ảnh 032 (`r03`). Các cụm xích lô đỗ sát nhau vẫn cần rà. |
 
 - Lệnh `merge_prelabels.py` đã dùng (dán nguyên): <<>>
-- **Phiên bản SAM bạn chọn** (SAM 1 / 2.1 / 3) và lý do: <<chất lượng mask, tốc độ, RAM, quyền truy cập>>
-- Lỗi nào **không sửa được bằng đổi ngưỡng** (ví dụ tuk-tuk bị gọi `car`)? Sửa thế nào? <<>>
-- Box **điểm cao mà sai** hoặc **điểm thấp mà đúng** (ảnh nào): <<>>
+- **Phiên bản SAM bạn chọn** (SAM 1 / 2.1 / 3) và lý do: SAM 2.1 Tiny (`sam2.1_t.pt`). Giữ cùng phiên bản và tham số để đối chiếu với lượt CPU. Trên RTX 3050, lượt `r04` tạo polygon cho 10/10 box ở 2 ảnh, trung bình 3,72 giây/ảnh. Ở ảnh 013, box `person` chứa hai người nên mask lấy vùng của cả hai người.
+- Lỗi nào **không sửa được bằng đổi ngưỡng** (ví dụ tuk-tuk bị gọi `car`)? Sửa thế nào? YOLO26n gọi tuk-tuk bị cắt ở mép trái ảnh 011 là `truck` (0.34, `r01`). Đổi ngưỡng chỉ lọc box theo điểm. YOLOE nhận diện xe đó là `three_wheeler` ở `r03`, nên dùng YOLOE để bổ sung lớp này.
+- Box **điểm cao mà sai** hoặc **điểm thấp mà đúng** (ảnh nào): Xe máy của người áo hồng ở ảnh 011 có box đúng ở 0.46 trong `r01` và mất khi tăng ngưỡng lên 0.50 trong `r02`.
 - Giới hạn: chọn ngưỡng trên chính gold (4 ảnh) nên số đo máy trên gold là lạc quan: <<>>
 
 ## 2. AI error profile (từ `qc/review_stats.md`)
