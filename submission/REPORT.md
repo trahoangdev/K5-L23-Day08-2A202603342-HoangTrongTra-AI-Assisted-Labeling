@@ -45,10 +45,13 @@
 
 | Ảnh | SAM (phiên bản) | Số click | Mask gồm người lái / hàng hoá? | Lỗi quan sát | File trong `masks/` |
 |---|---|---|---|---|---|
-| <<img_0xx>> | <<>> | <<>> | <<>> | <<>> | <<>> |
+| `img_004.jpg` | SAM 2.1 Base (`sam2.1_b.pt`, `r09`) | 11 (6 dương, 5 âm) + box | Hai người đứng cạnh xe nằm ngoài mask. Đã loại phần lớn túi và bình đặt ở bậc xe. | Phủ mái, kính và hai bánh nhìn thấy. Còn vài lỗ nhỏ ở mép ghế. Script ghi 1 polygon. | `tuktuk_img004_sam2.jpg` |
+| `img_013.jpg` | SAM 2.1 Base (`sam2.1_b.pt`, `r07`) | 14 (5 dương, 9 âm) + box | Tách được phần chính của người lái sau khi bổ sung điểm âm. | Bắt được mái và bánh xe chính. Mask đứt ở vài đoạn lan can mảnh và còn lấn sang một phần bánh xe máy phía sau. Script ghi 2 polygon. | `tuktuk_img013_sam2.jpg` |
+| `img_013.jpg` | MobileSAM (SAM 1, `mobile_sam.pt`, `r08`) | 14 (5 dương, 9 âm) + cùng box | Điểm âm ở đầu, thân và chân loại được phần người lái nhìn thấy. | Mái, bậc lên xuống và bánh chính liền hơn SAM 2.1 trên cùng bộ điểm. Thanh kim loại mảnh vẫn có đoạn mất. Script ghi 2 polygon. | `tuktuk_img013_sam1.jpg` |
+| `img_017.jpg` | SAM 2.1 Base (`sam2.1_b.pt`, `r10`) | 10 (5 dương, 5 âm) + box | Hai người đi bộ và xe bên trái nằm ngoài mask. | Phủ mái, ghế và hai bánh nhìn thấy. Còn vài đốm màu ở mép khoảng hở sau ghế. Script ghi 1 polygon. | `tuktuk_img017_sam2.jpg` |
 
-- Đối chiếu guideline mục 4.2: quy tắc nào giúp, quy tắc nào thiếu? <<>>
-- *(Tuỳ chọn)* Interactor SAM trong CVAT: làm được / không (lỗi gì, đã thử gì); khác gì offline: <<>>
+- Đối chiếu guideline mục 4.2: quy tắc nào giúp, quy tắc nào thiếu? Quy tắc bám phần nhìn thấy, bỏ khoảng hở lớn và bỏ bóng đổ giúp xác định mép xe, nhất là cửa hở ở `img_017.jpg`. Với `img_013.jpg`, hai lượt cùng 2 điểm dương và 1 điểm âm ở thân người lái (`r05`, `r06`) vẫn tô lên đầu hoặc chân. Cần thêm điểm âm trên các phần còn dính. Mục 4.2 chưa chỉ rõ cách rà thanh kim loại mảnh khi thanh nằm sát mép người hoặc xe phía sau.
+- *(Tuỳ chọn)* Interactor SAM trong CVAT: làm được / không (lỗi gì, đã thử gì); khác gì offline: Thực hiện offline bằng `sam2_points.py` trên RTX 3050. Script lưu ảnh phủ mask cùng dấu click và ghi số polygon. Lượt này chưa thử Interactor trong CVAT.
 
 ## 6. Calibration (Part 6)
 
