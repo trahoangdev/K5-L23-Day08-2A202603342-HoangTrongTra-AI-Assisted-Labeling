@@ -1,0 +1,16 @@
+image,object_id,error_type,reviewer,note
+img_003.jpg,2,thua,Codex,"Ô ở mép trái dưới chứa túi và đồ đặt sát lề, không thấy xe máy trong ô (x≈0–24, y≈285–324)."
+img_003.jpg,17,sai_vi_tri_kich_thuoc,Codex,Box cắt đỉnh nón lá và chừa nền bên trái thân người. Cần rà lại bốn mép theo phần nhìn thấy.
+img_003.jpg,,bo_sot,Codex,"Người ngồi sau xe máy đỏ bên trái, mũ bảo hiểm xanh và vai áo tối ngay sau người áo hồng (x≈88–151, y≈195–255)."
+img_006.jpg,,bo_sot,Codex,"Người tóc đen áo xanh lam ngồi bên bàn phía trước, giữa người áo cam và trẻ áo xanh lá (x≈835–890, y≈476–555)."
+img_013.jpg,,bo_sot,Codex,"Xe máy trắng sát mép tuk-tuk, thấy riêng chắn bùn và bánh trước lớn phía dưới bánh xe đỏ đã gán #127 (x≈881–978, y≈304–457)."
+img_014.jpg,146,sai_vi_tri_kich_thuoc,Codex,"Mép trên của box xe đỏ còn ăn vào phần biển số và đuôi của xe đen đỗ phía sau (x≈900–1024, y≈433–465)."
+img_017.jpg,158,sai_vi_tri_kich_thuoc,Codex,Mép trái x≈423 lấn sang đầu xe kế bên. Thân và mái của xe tiền cảnh bắt đầu khoảng x≈468.
+img_017.jpg,161,sai_thuoc_tinh,Codex,Chỉ thấy một phần đầu và vai ngay dưới ô tím. Ước lượng độ che sát ngưỡng 20% nhưng can_review đang tắt.
+img_024.jpg,295,sai_vi_tri_kich_thuoc,Codex,Box cắt phần trên mũ xanh của người bên trái và gồm cả đèn trước của xe máy. Tách hình học người với xe.
+img_024.jpg,,bo_sot,Codex,"Xe máy trắng đỏ bên dưới người mũ xanh #295, thấy rõ mặt nạ và đèn trước (x≈23–74, y≈572–635)."
+img_024.jpg,,bo_sot,Codex,"Xe máy ngay dưới người áo sáng #299 ở góc dưới trái, mặt nạ và cụm đầu xe còn phân biệt được (x≈116–157, y≈566–623)."
+img_024.jpg,,bo_sot,Codex,"Xe máy có đèn sáng ở vạch qua đường bên dưới người áo caro #298, thấy đầu xe và phần bánh bên dưới (x≈141–170, y≈517–562)."
+img_024.jpg,,bo_sot,Codex,"Xe màu bạc phía sau xe khách #317, có mui và đầu xe riêng nhô bên trái (x≈688–756, y≈208–267)."
+img_026.jpg,362,sai_vi_tri_kich_thuoc,Codex,"Box xe kẹp giữa xe xanh và xe đỏ cắt mất mép đuôi trắng phía phải, gần x≈751 và y≈484."
+img_035.jpg,,khong,Codex,Quét ảnh gốc rồi đối chiếu các ID. Chưa ghi nhận lỗi xác định trong lượt QC này.

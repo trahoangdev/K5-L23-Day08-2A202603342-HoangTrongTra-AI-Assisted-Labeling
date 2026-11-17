@@ -34,7 +34,7 @@
 
 ## 4. Máy có đáng dùng không?
 
-- Thời gian (từ `time_log.csv`): duyệt 0,35 phút/ảnh (lượt duyệt mất 8,31 phút cho 24 ảnh batch và thêm 0,95 phút để rà lại 3 ảnh).
+- Thời gian (từ `time_log.csv`): gán tay 8 phút/ảnh (32 phút cho 4 ảnh gold) vs duyệt 0,35 phút/ảnh (8,31 phút cho 24 ảnh batch và thêm 0,95 phút để rà lại 3 ảnh).
 - Kết luận: có thể dùng pre-label làm điểm bắt đầu để duyệt, dựa trên 446/518 box được giữ nguyên sau khi loại vùng quanh bẫy. Riêng `three_wheeler` cần kiểm từng xe vì chỉ giữ nguyên 7/40 box.
 - **Ba quy tắc giảm thiên kiến của bạn** (mỗi quy tắc kiểm tra được bằng số hoặc việc làm):
   1. Mở ảnh gốc trước ở 24/24 ảnh, quét bốn góc và đếm xe ba bánh rõ trước khi bật box đề xuất.
@@ -55,26 +55,26 @@
 
 ## 6. Calibration (Part 6)
 
-- Số quyết định: <<>> (`calibration_decisions.csv`); quan trọng nhất (dẫn `CAL-xx`): <<>>
-- Quy tắc mới đã vào `guideline_v1.1_calibrated.md`: <<>>
-- Nguyên nhân gốc: <<guideline mơ hồ / chưa nắm quy tắc / máy>>
+- Số quyết định: 10 (`calibration_decisions.csv`); quan trọng nhất (dẫn `CAL-xx`): `CAL-02` yêu cầu tìm hai dấu hiệu cùng xe trước khi tách từng xe đỗ sát nhau. `CAL-10` yêu cầu xác định từng tuk-tuk theo mui, thân và bánh rồi kiểm mép nơi hai xe tiếp giáp.
+- Quy tắc mới đã vào `guideline_v1.1_calibrated.md`: Chốt 7 câu hỏi mở (`CAL-01`–`CAL-07`) và 3 ca từ lỗi máy, cờ `can_review` và bẫy lọt (`CAL-08`–`CAL-10`). Mỗi ca có ảnh ví dụ. Các quy tắc làm rõ cách dùng `ignore_region`, tách xe chồng nhau và gán người bị che.
+- Nguyên nhân gốc: Guideline v1.0 chưa chỉ rõ dấu hiệu để tách các xe đỗ sát nhau. YOLOE vẽ nhiều box cho các bộ phận của cùng một xe. Lượt duyệt batch còn bỏ sót đối tượng nhỏ hoặc bị che một phần.
 
 ## 7. QC và quyết định (Part 6)
 
-- Mẫu: <<n>> ảnh (<<m>> ảnh `can_review` + <<k>> ngẫu nhiên, seed 42); người kiểm: bạn (**hạn chế**: bạn vừa là người duyệt).
-- Lỗi theo **đối tượng**: <<.../... = ...%>> · theo **ảnh**: <<.../... = ...%>> (ngưỡng Release ≤ 2%)
-- Top lỗi (trong: bỏ sót, thừa, sai lớp, sai vị trí/kích thước, sai thuộc tính, sai mask) + một ảnh ví dụ mỗi loại: <<>>
-- **Giới hạn mẫu nhỏ** (cận trên 95% trong `qc_report_auto.md`): <<>>
-- Script kiểm được / không kiểm được (ví dụ ôm sát, cùng bỏ sót với máy, theo checklist thật): <<>>
+- Mẫu: 8 ảnh (3 ảnh `can_review` + 5 ngẫu nhiên, seed 42); người kiểm: Codex (**hạn chế**: cùng công cụ đã hỗ trợ lượt duyệt batch).
+- Lỗi theo **đối tượng**: 14/175 = 8,0% · theo **ảnh**: 7/8 = 87,5% (ngưỡng Release ≤ 2%)
+- Top lỗi (trong: bỏ sót, thừa, sai lớp, sai vị trí/kích thước, sai thuộc tính, sai mask) + một ảnh ví dụ mỗi loại: Bỏ sót 7/14, ví dụ xe máy trắng cạnh tuk-tuk ở `img_013.jpg`. Sai vị trí/kích thước 5/14, ví dụ box #158 lấn xe bên cạnh ở `img_017.jpg`. Thừa 1/14, box #2 ôm đồ ở lề đường trong `img_003.jpg`. Sai thuộc tính 1/14, box #161 ở `img_017.jpg` thiếu cờ `can_review` cho ca che khuất sát ngưỡng.
+- **Giới hạn mẫu nhỏ** (cận trên 95% trong `qc_report_auto.md`): Cận trên Wilson là 98% với 7/8 ảnh lỗi. Mẫu chỉ có 8 ảnh và ưu tiên 3 ca khó, nên 87,5% mô tả mẫu đã kiểm. Mẫu chưa đủ để ước lượng chính xác toàn bộ 24 ảnh hoặc chứng minh ngưỡng 2%.
+- Script kiểm được / không kiểm được (ví dụ ôm sát, cùng bỏ sót với máy, theo checklist thật): `validate_labels.py` kiểm đủ ảnh, lớp và tọa độ hợp lệ. `qc_report.py` tính số lỗi từ phiếu. Độ ôm sát, vật bỏ sót và việc làm đúng checklist cần đối chiếu ảnh gốc với overlay.
 
-**Quyết định: <<Release / Hold / Rework>>**, ngày <<YYYY-MM-DD>>. Lý do (đi theo Hold → Rework → Release): <<>>
-Nếu Rework / Hold, việc cần làm tiếp: <<>>
+**Quyết định: Rework**, ngày 2026-11-17. Lý do (đi theo Hold → Rework → Release): Đã chốt các ca v1.1 và dữ liệu trong mẫu mở được. Có 7/8 ảnh lỗi (87,5%), vượt ngưỡng 2%. Bỏ sót chiếm 7/14 lỗi (50,0%) và lặp trên nhiều ảnh. Bắt bẫy đạt 11/12 sau lượt rà lại.
+Nếu Rework / Hold, việc cần làm tiếp: Sửa lỗi đã ghi ở 7 ảnh QC trong CVAT. Quét thêm các ảnh còn lại sau khi ẩn box để tìm người và xe bị bỏ sót, nhất là vật bị che và xe cạnh người lái. Sau khi sửa, xuất `qc_fixed.json`, dựng lại candidate và ghi một lượt QC mới.
 
 ## 8. Ghi chú cá nhân
 
 - **Dùng AI để làm bài** (công cụ nào, việc gì, kiểm tra thế nào; "không dùng" nếu không): Học viên sử dụng Codex để đọc hướng dẫn.
 - Gold có bị nhiễm không (bạn có nhìn pre-label hay hỏi AI trước khi gán xong)? Có hỗ trợ AI trước khi chốt nhãn gold. Học viên đã rà lại 4 ảnh trong CVAT. Bản COCO gold giữ 8 cờ `can_review` gồm 2 ở `img_012.jpg`, 4 ở `img_020.jpg` và 2 ở `img_036.jpg`. Số đo 51/69 thể hiện độ khớp với bộ tham chiếu đã rà này.
-- Máy / GPU / CVAT dùng; vướng mắc cài đặt: <<>>
-- Dùng cache `data/cache/` thay vì tự chạy? <<không / có, vì ...>>
-- Lỗi / bug script đã gặp (nếu có): <<>>
-- Một điều bạn làm khác lần sau: <<>>
+- Máy / GPU / CVAT dùng; vướng mắc cài đặt: Windows 11, RTX 3050 Laptop 4 GB, Python 3.14.4, PyTorch 2.15.0+cu132 và CVAT Docker v2.74.1. Lượt cài ban đầu dùng PyTorch CPU. Sau khi chuyển sang bản CUDA, các lượt YOLO và SAM đã chạy được trên GPU.
+- Dùng cache `data/cache/` thay vì tự chạy? Chạy YOLO26, YOLOE và các lượt SAM trực tiếp trên máy. Số quét ngưỡng lấy từ lượt CUDA trên 36 ảnh.
+- Lỗi / bug script đã gặp (nếu có): Khi tạo task batch, CVAT báo lệch timestamp cache. Tạo lại task từ ZIP 24 ảnh và tắt `Use cache` cho task thì nạp được. Các script Pha 6 chạy được với tệp hiện tại.
+- Một điều bạn làm khác lần sau: Sau khi quét ảnh gốc, kiểm từng người đi xe đã có box xe riêng chưa. Dùng cùng bước này ở toàn bộ ảnh đông xe vì lỗi bỏ sót chiếm 7/14 lỗi trong mẫu QC.
