@@ -1,13 +1,13 @@
 # Thông tin học viên
 
-- Họ và tên: <<>>
-- MSHV: <<>>
-- Lớp (L2 / L3 / khác): <<>>
-- Tài khoản GitHub: <<>>
-- Repo bài nộp (URL): <<>>
+- Họ và tên: Hoàng Trọng Trà
+- MSHV: 2A202603342
+- Lớp (L2 / L3 / khác): L2B
+- Tài khoản GitHub: trahoangdev
+- Repo bài nộp (URL): https://github.com/trahoangdev/K5-L23-Day08-2A202603342-HoangTrongTra-AI-Assisted-Labeling
 - Commit chốt bài (hash): <<>>
-- Máy: <<hệ điều hành, GPU (CUDA / MPS / không có)>>
-- CVAT (Docker): <<phiên bản, ví dụ v2.81.0>>
+- Máy: Windows 11 Home Single Language, chạy CPU (PyTorch 2.15.0+cpu)
+- CVAT (Docker): v2.74.1
 
 ## Kết quả tóm tắt (điền cuối bài; số lấy từ `submission/qc/*`, kèm mẫu số)
 
